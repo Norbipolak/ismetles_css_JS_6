@@ -134,5 +134,90 @@ Valamiért azt mondja a JavaScript, hogy a scope-ja ennek az, hogy window, tehá
 a window egy olyan beépített objektum mint mondjuk a location vagy a document!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 elmagyarazas.js!!!!!!!!!!!!!!!!!!
 
+És itt a window-ba is csomó hasznos metódus van, pl. meg tudjuk mondani az innerHeight-ot, outerHeight, -width
+********************************************************************************************************************************
+Van más formája is az prototype-inheritance-nek, amikor object-eket használunk 
 
+const Vehicle = {
+    brand: "Volvo",
+    type: "S-60",
+    color: "red"
+}
+
+const Car = {
+
+};
+
+Object.setPrototypesOf(Car, Vehicle);
+Itt a Car-nak beállítottuk a Vehicle-t, mint prototype-ot és megnézzük milye van a Car-nak 
+Ez olyan szempontból egyszerűbb, hogy object-et állítunk be object-nek és nem az object prototype-ját!!!!
+
+console.log(Car);
+    {}
+    [[Prototype]]: Object 
+        brand: "Volvo"
+        color: "red"
+        type: "S-60"
+        [[Prototype]]: Object 
+        constructor: f Object()
+        hasOwnProperty: f hasOwnProperty()
+        toString: f toString()
+        valueOf: f valueOf()
+
+És akkor látjuk, hogy itt a prototype-nál meg lesznek azok a mezők, amiket a Vehicle-nek készítettünk 
+A prototype-nak a prototype-ja az nyilván object, mert az objektumok attól örökölnek közvetlenül 
+
+És ha azt mondjuk, hogy a Vehicle-nek a brand-je az legyen "Mercedes"
+Akkor megnézhetjük ott már abban az esetben a Volvo helyett Mercedes van 
+Vehicle.brand = "Mercedes"
+console.log(Car);
+->
+{}
+[[Prototype]]: Object 
+    brand: "Mercedes"
+    color: "red"
+    type: "S-60"
+    [[Prototype]]: Object
+
+És ez azért van, mert ezek az objektumok, ezek olyanok mint a példányosított osztályok, hogyha ott megváltoztatjuk a tulajdonságot 
+akkor megváltozik és kész, nem olyasmi, mint a class-ek, hogy létre tudunk hozni belölük, több példányt és akkor ott a példányok 
+más és más tulajdonsággal rendelkeznek, de mondjuk ugyanazokat a metódusokat meg mezőket bírtokolják 
+
+de viszont ezt ki lehet kerülni azzal
+->
+const Vehicle2 = Object.create(Vehicle);
+console.log(Vehicle2);
+és itt ugyanazt fogjuk látni 
+{}
+    [[Prototype]]: Object
+    brand: "Volvo"
+    color: "red"
+    type: "S-60"
+    [[Prototype]]: Object
+
+Viszont ha itt azt mondjuk a Vehicle2-nek, hogy "Mercedes"
+Vehicle2.brand = "Mercedes";
+Akkor nézzük meg, hogy mi található a Vehicle-ben és a Vehicle2-ben 
+console.log(Vehicle);
+console.log(Vehicle2);
+{brand: 'Volvo', type: 'S-60', color: 'red'}
+    brand: "Volvo"
+    color: "red"
+    type: "S-60"
+    [[Prototype]]: Object
+{brand: 'Mercedes'}
+    brand: "Mercedes"
+    [[Prototype]]: Object
+        brand: "Volvo"
+        color: "red"
+        type: "S-60"
+        [[Prototype]]: Object
+
+És a Vehicle-ben az van, hogy brand: Volvo color: red stb. és Vehicle2-ben meg csak az, hogy brand: Mercedes és prototype-jában 
+brand: Volvo, color: red stb. volt valamikor!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+és ha azt mondjuk, hogy console.log(Vehicle2.brand)
+Akkor nekünk azt fogja mondani, hogy Mercedes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Fontos!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Ez a haszna az Object.create-nek, hogy le tudunk másolni vele egy objektumot 
 */

@@ -399,5 +399,49 @@ It provides methods for creating date objects (new Date()), getting and setting 
   - The JSON object provides methods for parsing JSON strings 
 (JSON.parse()) and converting JavaScript objects to JSON strings (JSON.stringify()). 
 It is commonly used for exchanging data between a web server and a client.
+*********************************************************************************************************************************************
+Mi az a promise és mikor használjuk
+
+In JavaScript, a Promise is an object representing the eventual completion or failure of an asynchronous operation. 
+It allows you to handle asynchronous operations more easily and provides a way to execute code asynchronously 
+and handle the result when it's ready.
+
+A Promise can be in one of three states:
+
+Pending: Initial state, neither fulfilled nor rejected.
+Fulfilled (Resolved): The operation completed successfully.
+Rejected: The operation failed with an error.
+
+const myPromise = new Promise((resolve, reject) => {
+  -> Perform an asynchronous operation, such as fetching data from a server
+  setTimeout(() => {
+    const data = 'Data fetched successfully';
+    -> If the operation succeeds, call the resolve function with the result
+    resolve(data);
+    -> If the operation fails, call the reject function with an error
+    reject(new Error('Failed to fetch data'));
+  }, 2000);
+});
+
+-> Using the then() method to handle the fulfilled state
+myPromise.then((result) => {
+  console.log('Promise fulfilled:', result);
+}).catch((error) => {
+  console.error('Promise rejected:', error);
+});
+
+We create a new Promise object (myPromise) with a callback function that takes two parameters: resolve and reject.
+
+Inside the callback function, we perform an asynchronous operation (simulated with setTimeout) 
+and then call resolve with the result when the operation is successful.
+
+We use the then() method to specify a callback function to be executed when the Promise is fulfilled (resolved) 
+and the catch() method to specify a callback function to be executed when the Promise is rejected.
+
+If the asynchronous operation fails, we call reject with an error, and the catch() method will be triggered with the error.
+
+Promises are commonly used for handling asynchronous tasks such as fetching data from a server, 
+reading files, or performing long-running computations. They provide a cleaner and more structured way to deal with asynchronous code
+compared to traditional callback-based approaches.
 
 */
